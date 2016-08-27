@@ -4,59 +4,63 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="description" content="Wale Eseyin, Empath. Software Engineer. Horologist.">
-    <title>Contacts Index</title>
-    <!--link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous"-->
-    <link rel="stylesheet" type="text/css" href="../public/css/bootstrap.min">
-    <!-- Optional theme -->
-    <!--link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous"-->
-    <link rel="stylesheet" type="text/css" href="../public/css/bootstrap-theme.min">
+    <title>Address Book</title>
+   
+    <link rel="stylesheet" type="text/css" href="css/bootstrap.min.css">
+    <link rel="stylesheet" type="text/css" href="css/style.css">
+    
     <link href="https://fonts.googleapis.com/css?family=Lato:100,300,400,700" rel="stylesheet">
     <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet">
   </head>
   <body>
-    <nav class="navbar navbar-default">
-      <div class="container-fluid">
-        <div class="navbar-header">
-          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
-          <span class="sr-only">Toggle navigation</span>
-          <span class="icon-bar"></span>
-          <span class="icon-bar"></span>
-          <span class="icon-bar"></span>
-        </button>
-        <a class="navbar-brand" href="#">Contacts Index</a>
-        </div>
+    <header class="site-header">
+      <div class="wrapper">
+        <a href="/" class="nav-open">
+          <span class="sr-only">Open Navigation</span>
+          <i class="fa fa-bars"></i>
+        </a>
+        <h1 class="site-title"><a href="/">Address Book</a></h1>
+        <nav class="site-nav">
+          <ul>
+            <li>
+              <a href="index.html" class="nav-close">
+                <span class="sr-only">Close Navigation</span>
+                <i class="fa fa-times"></i>
+            </a>
+            </li>
+            <li><a href="/Add New Contact"></a></li>
+          </ul>
+        </nav>
       </div>
-    </nav>
-    <div class="row">
-      <div class="col-sm-6">
-        <div class="jumbotron">
-          <h3><span class="label label-default">Address Book</span></h3>
-          {{#each contacts as |contact|}}
+    </header>
+
+    <main class="site-main"></main>
+      <div class="wrapper">
+
+    <header class="page-header">
+      <h2 class="page-title">
+        <span>Add New Contact</span><br>
+        <span class="bigger">View Contacts</span>
+      </h2>
+    </header>
+
+    <section class="block">
+      <header class="block__header">
+        <h3 class="block__title">Contacts Index</h3>
+      </header>
+        {{#each contacts as |contact|}}
           <div class="list-group">
-            <a href="/contacts/{{contact._id}}" class="list-group-item">
-              <h5 class="list-group-item-heading">contact.name.first</h5>
-              <p class="list-group-item-text">contact.mobile</p>
+            <a id="contact" href="/contact/#{{contact.name.first}}" class="list-group-item">
+              <h4 class="list-group-item-heading"><i class="fa fa-user"></i>&nbsp; {{contact.name.full}}</h4>
+              <p class="list-group-item-text">{{contact.mobile}}</p>
             </a>
           </div>
           {{/each}}
-        </div>
-      </div>
-      <div class="col-sm-6">
-        <div class="row">
-          <h3>Contact Details</h3>
-        </div>
-        <div class="row">
-          <span>Name</span>
-          <span>E-Mail</span>
-          <span>Mobile</span>
-          <span>Location</span>
-        </div>
-        </div>
+    </section>
     </div>
+    </main>
+    <script   src="https://code.jquery.com/jquery-3.1.0.js"   integrity="sha256-slogkvB1K3VOkzAI8QITxV3VzpOnkeNVsKvtkYLMjfk="   crossorigin="anonymous"></script>
     
 
-    <div id='root'>
-    </div>
-    <script   src="https://code.jquery.com/jquery-3.1.0.js"   integrity="sha256-slogkvB1K3VOkzAI8QITxV3VzpOnkeNVsKvtkYLMjfk="   crossorigin="anonymous"></script>
   </body>
 </html>

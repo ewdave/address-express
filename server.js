@@ -7,10 +7,11 @@ require('dotenv').config({ silent: true });
 const mongoose = require('mongoose');
 var Contacts = require('./models/contact');
 
-mongoose.Promise = global.Promise;
-mongoose.connect('mongodb://localhost:27017/contactsapp', function(err) {
+//mongoose.Promise = global.Promise;
+mongoose.connect('mongodb://localhost/contactsapp', function(err) {
 	if (err) {
-		console.info('Error connecting to DB')
+		console.error('Error connecting to DB')
+		throw err
 	} else { console.info('Connected to ContactsApp DB')}
 })
 
@@ -42,8 +43,8 @@ app.get('/', (req, res) => {
 	})
 })
 
-app.get('/contacts/:id', (req, res) => {
-	Contacts.findOne({ _id: req.params.id }, function(err, docs) {
+app.get('/contact/:name', (req, res) => {
+	Contacts.findOne({ _id: req.params.name }, function(err, docs) {
 		if (err) {
 			console.log(err)
 			res.send({
@@ -53,7 +54,7 @@ app.get('/contacts/:id', (req, res) => {
 
 		//if (!docs) req.flash('error', 'Contact not Found') ;
 
-		res.render('index', {contact: docs})
+		res.render('contact', {contact: docs})
 	})
 })
 
@@ -62,7 +63,7 @@ app.post('/contacts', (req, res) => {
 		name: { first: req.body.first, last: req.body.last },
 		email: req.body.email,
 		mobile: req.body.mobile,
-		location: req.body.location
+		address: req.body.address
 	});
 	contact.save(function(err, docs) {
 		if (err) {
@@ -89,7 +90,7 @@ app.put('/contacts/:id', (req, res) => {
 		doc.name = { first: req.body.first, last: req.body.last };
 		doc.email = req.body.email;
 		doc.mobile = req.body.mobile;
-		doc.location = req.body.location;
+		doc.address = req.body.address;
 		doc.save(function(err, contact) {
 			if (err) res.send('err');
 			res.send(contact)

@@ -10,7 +10,7 @@ var schema = new Schema({
 	},
 	email: String,
 	mobile: String,
-	location: String
+	address: String
 })
 
 schema.virtual('name.full').get(function() {
