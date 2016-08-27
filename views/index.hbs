@@ -23,12 +23,12 @@
         <nav class="site-nav">
           <ul>
             <li>
-              <a href="index.html" class="nav-close">
+              <a href="/" class="nav-close">
                 <span class="sr-only">Close Navigation</span>
                 <i class="fa fa-times"></i>
-            </a>
+              </a>
             </li>
-            <li><a href="/Add New Contact"></a></li>
+            <li><a href="/">Add New Contact</a></li>
           </ul>
         </nav>
       </div>
@@ -39,18 +39,19 @@
 
     <header class="page-header">
       <h2 class="page-title">
-        <span>Add New Contact</span><br>
+        <span>Add New Contacts</span><br>
         <span class="bigger">View Contacts</span>
+        <span>Edit Contacts</span>
       </h2>
     </header>
 
     <section class="block">
       <header class="block__header">
-        <h3 class="block__title">Contacts Index</h3>
+        <h3 class="block__title"><i class="fa fa-users"></i>&nbsp; Contacts Index</h3>
       </header>
         {{#each contacts as |contact|}}
           <div class="list-group">
-            <a id="contact" href="/contact/#{{contact.name.first}}" class="list-group-item">
+            <a id="contact" href="/contacts/{{contact._id}}" class="list-group-item">
               <h4 class="list-group-item-heading"><i class="fa fa-user"></i>&nbsp; {{contact.name.full}}</h4>
               <p class="list-group-item-text">{{contact.mobile}}</p>
             </a>
@@ -60,7 +61,10 @@
     </div>
     </main>
     <script   src="https://code.jquery.com/jquery-3.1.0.js"   integrity="sha256-slogkvB1K3VOkzAI8QITxV3VzpOnkeNVsKvtkYLMjfk="   crossorigin="anonymous"></script>
-    
+    <script>
+      
+    var navigation=document.getElementsByClassName("site-nav")[0],openNavButton=document.getElementsByClassName("nav-open")[0],closeNavButton=document.getElementsByClassName("nav-close")[0];openNavButton.addEventListener("click",function(i){return navigation.classList.add("open"),i.preventDefault(),!1}),closeNavButton.addEventListener("click",function(i){return navigation.classList.remove("open"),i.preventDefault(),!1});
+    </script>
 
   </body>
 </html>

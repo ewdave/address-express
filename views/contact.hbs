@@ -4,57 +4,76 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="description" content="Wale Eseyin, Empath. Software Engineer. Horologist.">
-    <title>Contact Index</title>
-    <!--link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous"-->
+    <title>Address Book</title>
+   
     <link rel="stylesheet" type="text/css" href="css/bootstrap.min.css">
-    <!-- Optional theme -->
-    <!--link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous"-->
-    <link rel="stylesheet" type="text/css" href="css/bootstrap-theme.min.css">
+    <link rel="stylesheet" type="text/css" href="css/style.css">
+    
     <link href="https://fonts.googleapis.com/css?family=Lato:100,300,400,700" rel="stylesheet">
     <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet">
-    <style>
-      #edit {
-        display: none;
-      }
-    </style>
   </head>
+  <body>
+    <header class="site-header">
+      <div class="wrapper">
+        <a href="/" class="nav-open">
+          <span class="sr-only">Open Navigation</span>
+          <i class="fa fa-bars"></i>
+        </a>
+        <h1 class="site-title"><a href="/">Address Book</a></h1>
+        <nav class="site-nav">
+          <ul>
+            <li>
+              <a href="/" class="nav-close">
+                <span class="sr-only">Close Navigation</span>
+                <i class="fa fa-times"></i>
+              </a>
+            </li>
+            <li><a href="/">Add New Contact</a></li>
+          </ul>
+        </nav>
+      </div>
+    </header>
 
-  <div class="nav-list">
-    <a href="/">Back to Contacts List</a>
-  </div>
+    <main class="site-main"></main>
+      <div class="wrapper">
 
-  <div class="row page-header">
-    <h3>Contact Details</h3>
-  </div>
-  <div id="contact-detail" class="row thumbnail">
-    <h5>{{contact.name.full}}</h5>
-    <dl>
-      <dt>First Name</dt>
-      <dd id="view">{{contact.name.first}}</dd>
-      <dd id="edit"><input type="text" id="first" value="{{contact.name.first}}"></dd>
-      <br>
-      <dt>Last Name</dt>
-      <dd id="view">{{contact.name.last}}</dd>
-      <dd id="edit"><input type="text" id="last" value="{{contact.name.last}}"></dd>
-      <br>
-      <dt>E-Mail</dt>
-      <dd id="view">{{contact.email}}</dd>
-      <dd id="edit"><input type="text" id="email" value="{{contact.email}}"></dd>
-      <br>
-      <dt>Address</dt>
-      <dd id="view">{{contact.address}}</dd>
-      <dd id="edit"><input type="text" id="address" value="{{contact.address}}"></dd>
-      <br>
-      <dd id="edit">
-        <input type="submit" value="Save" onclick="save()">
-        <input type="submit" value="Cancel" onclick="cancel()">
-      </dd>
-    </dl>
-  </div>
-  <p>
-    <a href="#" class="btn btn-primary" role="button" onclick="edit()"><i class="fa fa-pencil fa-fw"></i>&nbsp; Edit</a>
-    <a href="#" class="btn btn-danger" role="button" onclick="del()"><i class="fa fa-trash-o fa-fw"></i>&nbsp; Delete</a>
-  </p>
+      <header class="page-header">
+        <h2 class="page-title">
+          <span class="bigger"><i class="fa fa-user fa-lg"></i>&nbsp; Contact Details</span>
+        </h2>
+      </header>
+
+      <section class="block">
+        <header class="block__header">{{contact.name.full}}</header>
+        <dl>
+          <dt>First Name</dt>
+          <dd id="view">{{contact.name.first}}</dd>
+          <dd id="edit"><input type="text" id="first" value="{{contact.name.first}}"></dd>
+          <br>
+          <dt>Last Name</dt>
+          <dd id="view">{{contact.name.last}}</dd>
+          <dd id="edit"><input type="text" id="last" value="{{contact.name.last}}"></dd>
+          <br>
+          <dt>E-Mail</dt>
+          <dd id="view">{{contact.email}}</dd>
+          <dd id="edit"><input type="text" id="email" value="{{contact.email}}"></dd>
+          <br>
+          <dt>Address</dt>
+          <dd id="view">{{contact.address}}</dd>
+          <dd id="edit"><input type="text" id="address" value="{{contact.address}}"></dd>
+          <br>
+          <dd id="edit">
+            <input type="submit" value="Save" onclick="save()">
+            <input type="submit" value="Cancel" onclick="cancel()">
+          </dd>
+        </dl>
+        <p>
+          <a href="#" class="btn btn-primary" role="button" onclick="edit()"><i class="fa fa-pencil fa-fw"></i>&nbsp; Edit</a>
+          <a href="#" class="btn btn-danger" role="button" onclick="del()"><i class="fa fa-trash-o fa-fw"></i>&nbsp; Delete</a>
+        </p>
+      </section>
+      </div>
+      </main>
 
 <script   src="https://code.jquery.com/jquery-3.1.0.js"   integrity="sha256-slogkvB1K3VOkzAI8QITxV3VzpOnkeNVsKvtkYLMjfk="   crossorigin="anonymous"></script>
 <script>

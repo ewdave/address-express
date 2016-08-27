@@ -8,7 +8,7 @@ const mongoose = require('mongoose');
 var Contacts = require('./models/contact');
 
 //mongoose.Promise = global.Promise;
-mongoose.connect('mongodb://localhost/contactsapp', function(err) {
+mongoose.connect('mongodb://127.0.0.1/contactsapp', function(err) {
 	if (err) {
 		console.error('Error connecting to DB')
 		throw err
@@ -43,8 +43,8 @@ app.get('/', (req, res) => {
 	})
 })
 
-app.get('/contact/:name', (req, res) => {
-	Contacts.findOne({ _id: req.params.name }, function(err, docs) {
+app.get('/contacts/:id', (req, res) => {
+	Contacts.findOne({_id : req.params.id }, function(err, doc) {
 		if (err) {
 			console.log(err)
 			res.send({
@@ -54,7 +54,7 @@ app.get('/contact/:name', (req, res) => {
 
 		//if (!docs) req.flash('error', 'Contact not Found') ;
 
-		res.render('contact', {contact: docs})
+		res.render('contact', {contact: doc})
 	})
 })
 
