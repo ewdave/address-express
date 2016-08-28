@@ -1,99 +1,73 @@
-<!doctype html>
-<html>
-  <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="description" content="Wale Eseyin, Empath. Software Engineer. Horologist.">
-    <title>Address Book</title>
-   
-    <link rel="stylesheet" type="text/css" href="css/bootstrap.min.css">
-    <link rel="stylesheet" type="text/css" href="css/style.css">
-    
-    <link href="https://fonts.googleapis.com/css?family=Lato:100,300,400,700" rel="stylesheet">
-    <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet">
-  </head>
-  <body>
-    <header class="site-header">
-      <div class="wrapper">
-        <a href="/" class="nav-open">
-          <span class="sr-only">Open Navigation</span>
-          <i class="fa fa-bars"></i>
-        </a>
-        <h1 class="site-title"><a href="/">Address Book</a></h1>
-        <nav class="site-nav">
-          <ul>
-            <li>
-              <a href="/" class="nav-close">
-                <span class="sr-only">Close Navigation</span>
-                <i class="fa fa-times"></i>
-              </a>
-            </li>
-            <li><a href="/">Add New Contact</a></li>
-          </ul>
-        </nav>
-      </div>
-    </header>
 
-    <main class="site-main"></main>
-      <div class="wrapper">
+  <style>
+    dt {
+      font-weight: bolder;
+    }
+    .edit {
+      display: none;
+    }
+  </style>
+  <header class="page-header">
+    <h2 class="page-title">
+      <span class="bigger"><i class="fa fa-user fa-lg"></i>&nbsp; Contact Details</span>
+    </h2>
+  </header>
 
-      <header class="page-header">
-        <h2 class="page-title">
-          <span class="bigger"><i class="fa fa-user fa-lg"></i>&nbsp; Contact Details</span>
-        </h2>
-      </header>
-
-      <section class="block">
-        <header class="block__header">{{contact.name.full}}</header>
-        <dl>
-          <dt>First Name</dt>
-          <dd id="view">{{contact.name.first}}</dd>
-          <dd id="edit"><input type="text" id="first" value="{{contact.name.first}}"></dd>
-          <br>
-          <dt>Last Name</dt>
-          <dd id="view">{{contact.name.last}}</dd>
-          <dd id="edit"><input type="text" id="last" value="{{contact.name.last}}"></dd>
-          <br>
-          <dt>E-Mail</dt>
-          <dd id="view">{{contact.email}}</dd>
-          <dd id="edit"><input type="text" id="email" value="{{contact.email}}"></dd>
-          <br>
-          <dt>Address</dt>
-          <dd id="view">{{contact.address}}</dd>
-          <dd id="edit"><input type="text" id="address" value="{{contact.address}}"></dd>
-          <br>
-          <dd id="edit">
-            <input type="submit" value="Save" onclick="save()">
-            <input type="submit" value="Cancel" onclick="cancel()">
-          </dd>
-        </dl>
-        <p>
-          <a href="#" class="btn btn-primary" role="button" onclick="edit()"><i class="fa fa-pencil fa-fw"></i>&nbsp; Edit</a>
-          <a href="#" class="btn btn-danger" role="button" onclick="del()"><i class="fa fa-trash-o fa-fw"></i>&nbsp; Delete</a>
-        </p>
-      </section>
-      </div>
-      </main>
+  <section class="block">
+    <header class="block__header">{{contact.name.full}}</header>
+    <dl>
+      <dt>First Name</dt>
+      <dd class="view">{{contact.name.first}}</dd>
+      <dd class="edit"><input type="text" id="first" value="{{contact.name.first}}"></dd>
+      <br>
+      <dt>Last Name</dt>
+      <dd class="view">{{contact.name.last}}</dd>
+      <dd class="edit"><input type="text" id="last" value="{{contact.name.last}}"></dd>
+      <br>
+      <dt>E-Mail</dt>
+      <dd class="view">{{contact.email}}</dd>
+      <dd class="edit"><input type="text" id="email" value="{{contact.email}}"></dd>
+      <br>
+      <dt>Mobile</dt>
+      <dd class="view">{{contact.mobile}}</dd>
+      <dd class="edit"><input type="text" id="mobile" value="{{contact.mobile}}"></dd>
+      <br>
+      <dt>Address</dt>
+      <dd class="view">{{contact.address}}</dd>
+      <dd class="edit"><input type="text" id="address" value="{{contact.address}}"></dd>
+      <br>
+      <dd class="edit">
+        <input type="submit" value="Save" onclick="save()">
+        <input type="submit" value="Cancel" onclick="cancel()">
+      </dd>
+    </dl>
+    <p>
+      <a href="#" class="btn btn-primary" role="button" onclick="edit()"><i class="fa fa-pencil fa-fw"></i>&nbsp; Edit</a>
+      <a href="#" class="btn btn-danger" role="button" onclick="del()"><i class="fa fa-trash-o fa-fw"></i>&nbsp; Delete</a>
+    </p>
+  </section>
 
 <script   src="https://code.jquery.com/jquery-3.1.0.js"   integrity="sha256-slogkvB1K3VOkzAI8QITxV3VzpOnkeNVsKvtkYLMjfk="   crossorigin="anonymous"></script>
+<script src="/js/jquery-1.12.0.min.js"></script>
 <script>
   function edit() {
-    $('#view').hide()
-    $('#edit').show()
+    $('.view').hide()
+    $('.edit').show()
   }
 
   function cancel() {
-    $('#view').show()
-    $('#edit').hide()
+    $('.view').show()
+    $('.edit').hide()
   }
 
   function save() {
-    $.ajax('/{{contact._id}}', {
+    $.ajax('/contacts/{{contact._id}}', {
       method: 'PUT',
       data: {
-        name.first: $('#first').val(),
-        name.last: $('#last').val(),
+        first: $('#first').val(),
+        last: $('#last').val(),
         email: $('#email').val(),
+        mobile: $('#mobile').val(),
         address: $('#address').val()
       },
       complete: function() {
@@ -104,7 +78,7 @@
   }
 
   function del() {
-    $.ajax('/{{contact._id}}', {
+    $.ajax('/contacts/{{contact._id}}', {
       method: 'DELETE',
       complete: function() {
         location = '/'
@@ -112,5 +86,3 @@
     })
   }
 </script>
-</body>
-</html>

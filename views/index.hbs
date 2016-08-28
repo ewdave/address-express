@@ -1,46 +1,9 @@
-<!doctype html>
-<html>
-  <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="description" content="Wale Eseyin, Empath. Software Engineer. Horologist.">
-    <title>Address Book</title>
-   
-    <link rel="stylesheet" type="text/css" href="css/bootstrap.min.css">
-    <link rel="stylesheet" type="text/css" href="css/style.css">
-    
-    <link href="https://fonts.googleapis.com/css?family=Lato:100,300,400,700" rel="stylesheet">
-    <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet">
-  </head>
-  <body>
-    <header class="site-header">
-      <div class="wrapper">
-        <a href="/" class="nav-open">
-          <span class="sr-only">Open Navigation</span>
-          <i class="fa fa-bars"></i>
-        </a>
-        <h1 class="site-title"><a href="/">Address Book</a></h1>
-        <nav class="site-nav">
-          <ul>
-            <li>
-              <a href="/" class="nav-close">
-                <span class="sr-only">Close Navigation</span>
-                <i class="fa fa-times"></i>
-              </a>
-            </li>
-            <li><a href="/">Add New Contact</a></li>
-          </ul>
-        </nav>
-      </div>
-    </header>
 
-    <main class="site-main"></main>
-      <div class="wrapper">
 
     <header class="page-header">
       <h2 class="page-title">
         <span>Add New Contacts</span><br>
-        <span class="bigger">View Contacts</span>
+        <span class="bigger"> View Contacts</span><br>
         <span>Edit Contacts</span>
       </h2>
     </header>
@@ -58,13 +21,4 @@
           </div>
           {{/each}}
     </section>
-    </div>
-    </main>
-    <script   src="https://code.jquery.com/jquery-3.1.0.js"   integrity="sha256-slogkvB1K3VOkzAI8QITxV3VzpOnkeNVsKvtkYLMjfk="   crossorigin="anonymous"></script>
-    <script>
-      
-    var navigation=document.getElementsByClassName("site-nav")[0],openNavButton=document.getElementsByClassName("nav-open")[0],closeNavButton=document.getElementsByClassName("nav-close")[0];openNavButton.addEventListener("click",function(i){return navigation.classList.add("open"),i.preventDefault(),!1}),closeNavButton.addEventListener("click",function(i){return navigation.classList.remove("open"),i.preventDefault(),!1});
-    </script>
-
-  </body>
-</html>
+    

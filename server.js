@@ -1,13 +1,14 @@
 const express = require('express');
 const bodyParser = require('body-parser');
 const config = require('./config');
-const engines = require('consolidate');
+//const engines = require('consolidate');
+var hbs = require('express-hbs');
 require('dotenv').config({ silent: true });
 
 const mongoose = require('mongoose');
 var Contacts = require('./models/contact');
 
-//mongoose.Promise = global.Promise;
+mongoose.Promise = global.Promise;
 mongoose.connect('mongodb://127.0.0.1/contactsapp', function(err) {
 	if (err) {
 		console.error('Error connecting to DB')
@@ -29,14 +30,16 @@ app.use(function(req, res, next) {
 app.use(bodyParser.json())
 app.use(bodyParser.urlencoded({ extended: true }))
 
-app.engine('hbs', engines.handlebars)
+app.engine('hbs', hbs.express4({
+	defaultLayout: (__dirname + '/views/layout.hbs')
+}))
 app.set('views', './views')
 app.set('view engine', 'hbs')
 
 app.use(express.static(__dirname + '/public'))
 
 app.get('/', (req, res) => {
-	Contacts.find({}, function(err, contacts) {
+	Contacts.find({}).sort({'name.first': 'asc'}).exec(function(err, contacts) {
 		if (err) throw err
 
 		res.render('index', {contacts: contacts})
@@ -53,27 +56,33 @@ app.get('/contacts/:id', (req, res) => {
 		}
 
 		//if (!docs) req.flash('error', 'Contact not Found') ;
-
-		res.render('contact', {contact: doc})
+		res.render('contact', {
+			title: 'Contact Index',
+			contact: doc
+		})
 	})
 })
 
-app.post('/contacts', (req, res) => {
+app.get('/new', (req, res) => {
+	res.render('new', {title: 'New Contact'});
+});
+
+app.post('/', (req, res) => {
 	var contact = new Contacts({
 		name: { first: req.body.first, last: req.body.last },
 		email: req.body.email,
 		mobile: req.body.mobile,
 		address: req.body.address
 	});
-	contact.save(function(err, docs) {
+	contact.save(function(err) {
 		if (err) {
 			console.log(err)
 			res.send({
 				'message': err
 			})
+		} else {
+			res.json(contact);
 		}
-
-		res.send(docs);
 	})
 })
 
@@ -85,6 +94,11 @@ app.put('/contacts/:id', (req, res) => {
 			res.send({
 				'message': err
 			})
+		}
+
+		if (!doc) {
+			res.send('Contact not Found')
+			console.log('Contact not Found')
 		}
 
 		doc.name = { first: req.body.first, last: req.body.last };
@@ -103,9 +117,9 @@ app.delete('/contacts/:id', (req, res) => {
 		doc.remove(function(err) {
 			if (err) {
 				console.log(err)
-				res.send({
-					'message': err
-				})
+				return res.send(500, err)
+			} else {
+				res.send('Contact Deleted')
 			}
 		})
 	})

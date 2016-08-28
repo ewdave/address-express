@@ -1,0 +1,53 @@
+<header class="page-header">
+	<h2 class="page-title">
+    <span class="bigger"><i class="fa fa-user fa-lg"></i>&nbsp; Create New Contact</span>
+  </h2>
+</header>
+
+<section class="block">
+	<header class="block__header">{{contact.name.full}}</header>
+
+	<dl>
+    <dt>First Name</dt>
+    <dd class="edit"><input type="text" id="first" value="{{contact.name.first}}"></dd>
+    <br>
+    <dt>Last Name</dt>
+    <dd class="edit"><input type="text" id="last" value="{{contact.name.last}}"></dd>
+    <br>
+    <dt>E-Mail</dt>
+    <dd class="edit"><input type="text" id="email" value="{{contact.email}}"></dd>
+    <br>
+    <dt>Mobile</dt>
+    <dd class="edit"><input type="text" id="mobile" value="{{contact.mobile}}"></dd>
+    <br>
+    <dt>Address</dt>
+    <dd class="edit"><input type="text" id="address" value="{{contact.address}}"></dd>
+    <br>
+    <dd class="edit">
+      <input type="submit" value="Add Contact" onclick="create()">
+    </dd>
+  </dl>
+</section>
+<script src="/js/jquery-1.12.0.min.js"></script>
+<script>
+	function create() {
+    $.ajax('/', {
+      method: 'POST',
+      data: {
+        first: $('#first').val(),
+        last: $('#last').val(),
+        email: $('#email').val(),
+        mobile: $('#mobile').val(),
+        address: $('#address').val()
+      },
+      complete: function() {
+        location = '/'
+      }
+    })
+  }
+
+  function cancel() {
+    $('.view').show()
+    $('.edit').hide()
+  }
+</script>
