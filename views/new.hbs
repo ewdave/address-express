@@ -1,18 +1,23 @@
+<header class="page-title">
+  <span class="smaller"><a href="/"><i class="fa fa-arrow-left"></i>&nbsp; Back to Index</a></span>
+</header>
+
 <header class="page-header">
 	<h2 class="page-title">
-    <span class="bigger"><i class="fa fa-user fa-lg"></i>&nbsp; Create New Contact</span>
+    <span class="bigger"><i class="fa fa-user fa-lg"></i>&nbsp; {{title}}</span>
   </h2>
 </header>
 
 <section class="block">
-	<header class="block__header">{{contact.name.full}}</header>
+
+	<header class="block__header">Basic Information</header>
 
 	<dl>
     <dt>First Name</dt>
-    <dd class="edit"><input type="text" id="first" value="{{contact.name.first}}"></dd>
+    <dd class="edit"><input type="text" id="first" value="{{contact.first}}"></dd>
     <br>
     <dt>Last Name</dt>
-    <dd class="edit"><input type="text" id="last" value="{{contact.name.last}}"></dd>
+    <dd class="edit"><input type="text" id="last" value="{{contact.last}}"></dd>
     <br>
     <dt>E-Mail</dt>
     <dd class="edit"><input type="text" id="email" value="{{contact.email}}"></dd>

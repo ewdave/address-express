@@ -7,9 +7,13 @@
       display: none;
     }
   </style>
+  <header class="page-title">
+    <span class="smaller"><a href="/"><i class="fa fa-arrow-left"></i>&nbsp; Back to Index</a></span>
+  </header>
+
   <header class="page-header">
     <h2 class="page-title">
-      <span class="bigger"><i class="fa fa-user fa-lg"></i>&nbsp; Contact Details</span>
+      <span class="bigger"><i class="fa fa-user fa-lg"></i>&nbsp; {{title}}</span>
     </h2>
   </header>
 
@@ -17,12 +21,12 @@
     <header class="block__header">{{contact.name.full}}</header>
     <dl>
       <dt>First Name</dt>
-      <dd class="view">{{contact.name.first}}</dd>
-      <dd class="edit"><input type="text" id="first" value="{{contact.name.first}}"></dd>
+      <dd class="view">{{contact.first}}</dd>
+      <dd class="edit"><input type="text" id="first" value="{{contact.first}}"></dd>
       <br>
       <dt>Last Name</dt>
-      <dd class="view">{{contact.name.last}}</dd>
-      <dd class="edit"><input type="text" id="last" value="{{contact.name.last}}"></dd>
+      <dd class="view">{{contact.last}}</dd>
+      <dd class="edit"><input type="text" id="last" value="{{contact.last}}"></dd>
       <br>
       <dt>E-Mail</dt>
       <dd class="view">{{contact.email}}</dd>
@@ -46,9 +50,6 @@
       <a href="#" class="btn btn-danger" role="button" onclick="del()"><i class="fa fa-trash-o fa-fw"></i>&nbsp; Delete</a>
     </p>
   </section>
-
-<script   src="https://code.jquery.com/jquery-3.1.0.js"   integrity="sha256-slogkvB1K3VOkzAI8QITxV3VzpOnkeNVsKvtkYLMjfk="   crossorigin="anonymous"></script>
-<script src="/js/jquery-1.12.0.min.js"></script>
 <script>
   function edit() {
     $('.view').hide()

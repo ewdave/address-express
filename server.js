@@ -1,8 +1,9 @@
-const express = require('express');
-const bodyParser = require('body-parser');
-const config = require('./config');
-//const engines = require('consolidate');
-var hbs = require('express-hbs');
+const express = require('express')
+	, bodyParser = require('body-parser')
+	, config = require('./config')
+	  //const engines = require('consolidate');
+	, hbs = require('express-hbs');
+
 require('dotenv').config({ silent: true });
 
 const mongoose = require('mongoose');
@@ -11,9 +12,8 @@ var Contacts = require('./models/contact');
 mongoose.Promise = global.Promise;
 mongoose.connect('mongodb://127.0.0.1/contactsapp', function(err) {
 	if (err) {
-		console.error('Error connecting to DB')
-		throw err
-	} else { console.info('Connected to ContactsApp DB')}
+		console.error('Error connecting to DB, Did you forget to run mongod?');
+	} else { console.info('Connected to contactsapp DB')}
 })
 
 // Express setup
@@ -25,26 +25,48 @@ app.use(function(req, res, next) {
   res.header('Access-Control-Allow-Headers', 'X-CSRF-Token, X-Requested-With, Accept, Accept-Version, Content-Length, Content-MD5, Content-Type, Date, X-Api-Version')
   res.header('Access-Control-Allow-Credentials', true)
   next()
-})
+});
 
-app.use(bodyParser.json())
-app.use(bodyParser.urlencoded({ extended: true }))
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: true }));
 
 app.engine('hbs', hbs.express4({
 	defaultLayout: (__dirname + '/views/layout.hbs')
-}))
-app.set('views', './views')
-app.set('view engine', 'hbs')
+}));
+app.set('views', './views');
+app.set('view engine', 'hbs');
 
-app.use(express.static(__dirname + '/public'))
+app.use(express.static(__dirname + '/public'));
 
 app.get('/', (req, res) => {
-	Contacts.find({}).sort({'name.first': 'asc'}).exec(function(err, contacts) {
+	Contacts.find({}).sort({'first': 'asc'}).exec(function(err, contacts) {
 		if (err) throw err
 
 		res.render('index', {contacts: contacts})
-	})
-})
+	});
+});
+
+app.get('/search', (req, res, next) => {
+	console.log('searching for...', req.query.name);
+	Contacts.find({'or': [{first: req.query.name}, {last: req.query.name}]}, function(err, contacts) {
+		if (err) {
+			console.log(err);
+			return next(err);
+		}
+
+		if (!contacts) {
+			return res.send('Contact not Found')
+			console.log('Contact not Found')
+		}
+
+		var data = [];
+		for (var i=0; i<contacts.length; i++) {
+			data.push(contacts[i].first);
+		}
+		console.log(contacts);
+		res.end(JSON.stringify(data));
+	});
+});
 
 app.get('/contacts/:id', (req, res) => {
 	Contacts.findOne({_id : req.params.id }, function(err, doc) {
@@ -55,21 +77,22 @@ app.get('/contacts/:id', (req, res) => {
 			})
 		}
 
-		//if (!docs) req.flash('error', 'Contact not Found') ;
+		console.log(doc)
 		res.render('contact', {
-			title: 'Contact Index',
+			title: 'Contact Details',
 			contact: doc
-		})
-	})
-})
-
-app.get('/new', (req, res) => {
-	res.render('new', {title: 'New Contact'});
+		});
+	});
 });
 
-app.post('/', (req, res) => {
+app.get('/new', (req, res) => {
+	res.render('new', {title: 'Create New Contact'});
+});
+
+app.post('/', (req, res, next) => {
 	var contact = new Contacts({
-		name: { first: req.body.first, last: req.body.last },
+		first: req.body.first, 
+		last: req.body.last,
 		email: req.body.email,
 		mobile: req.body.mobile,
 		address: req.body.address
@@ -101,7 +124,8 @@ app.put('/contacts/:id', (req, res) => {
 			console.log('Contact not Found')
 		}
 
-		doc.name = { first: req.body.first, last: req.body.last };
+		doc.first = req.body.first;
+		doc.last = req.body.last;
 		doc.email = req.body.email;
 		doc.mobile = req.body.mobile;
 		doc.address = req.body.address;
