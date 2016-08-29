@@ -11,6 +11,7 @@
     
     <link href="https://fonts.googleapis.com/css?family=Lato:100,300,400,700" rel="stylesheet">
     <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet">
+    {{{block 'pageStyles'}}}
   </head>
   <body>
     <header class="site-header">
@@ -20,6 +21,7 @@
           <i class="fa fa-bars"></i>
         </a>
         <h1 class="site-title"><a href="/">Address Book</a></h1>
+        <h1 class="site-title navbar-right"><a href="/new"><i class="fa fa-pencil"></i>&nbsp; New Contact</a></h1>
         <nav class="site-nav">
           <ul>
             <li>
@@ -41,13 +43,8 @@
 
       </div>
     </main>
-    
-    <script   src="https://code.jquery.com/jquery-3.1.0.js"   integrity="sha256-slogkvB1K3VOkzAI8QITxV3VzpOnkeNVsKvtkYLMjfk="   crossorigin="anonymous"></script>
-    <script src="/js/jquery-1.12.0.min.js"></script>
-    <script>
-      
-    var navigation=document.getElementsByClassName("site-nav")[0],openNavButton=document.getElementsByClassName("nav-open")[0],closeNavButton=document.getElementsByClassName("nav-close")[0];openNavButton.addEventListener("click",function(i){return navigation.classList.add("open"),i.preventDefault(),!1}),closeNavButton.addEventListener("click",function(i){return navigation.classList.remove("open"),i.preventDefault(),!1});
-    </script>
+    {{> scripts}}
 
+    {{{block 'pageScripts'}}}
   </body>
 </html>

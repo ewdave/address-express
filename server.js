@@ -31,7 +31,8 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
 app.engine('hbs', hbs.express4({
-	defaultLayout: (__dirname + '/views/layout.hbs')
+	defaultLayout: (__dirname + '/views/layout.hbs'),
+	partialsDir: (__dirname + '/views/partials')
 }));
 app.set('views', './views');
 app.set('view engine', 'hbs');
@@ -48,7 +49,10 @@ app.get('/', (req, res) => {
 
 app.get('/search', (req, res, next) => {
 	console.log('searching for...', req.query.name);
-	Contacts.find({'or': [{first: req.query.name}, {last: req.query.name}]}, function(err, contacts) {
+	var regexp = new RegExp(req.query.name, 'i');
+	Contacts.find({first: regexp}).
+	select('first last mobile').
+	exec(function(err, contacts) {
 		if (err) {
 			console.log(err);
 			return next(err);
@@ -63,8 +67,25 @@ app.get('/search', (req, res, next) => {
 		for (var i=0; i<contacts.length; i++) {
 			data.push(contacts[i].first);
 		}
-		console.log(contacts);
-		res.end(JSON.stringify(data));
+		
+		console.log(JSON.stringify(data));
+		res.send(JSON.stringify(data))
+	});
+});
+
+app.get('/contacts/:name', (req, res) => {
+	Contacts.findOne({first : req.params.name }, function(err, doc) {
+		if (err) {
+			console.log(err)
+			res.send({
+				'message': err
+			})
+		}
+
+		res.render('contact', {
+			title: 'Contact Details',
+			contact: doc
+		});
 	});
 });
 
@@ -77,7 +98,6 @@ app.get('/contacts/:id', (req, res) => {
 			})
 		}
 
-		console.log(doc)
 		res.render('contact', {
 			title: 'Contact Details',
 			contact: doc
@@ -104,7 +124,7 @@ app.post('/', (req, res, next) => {
 				'message': err
 			})
 		} else {
-			res.json(contact);
+			res.send(JSON.stringify(contact));
 		}
 	})
 })

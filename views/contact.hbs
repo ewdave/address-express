@@ -1,12 +1,13 @@
-
-  <style>
-    dt {
+{{#contentFor 'pageStyles'}}
+<style>
+  dt {
       font-weight: bolder;
     }
     .edit {
       display: none;
     }
-  </style>
+</style>
+{{/contentFor}}
   <header class="page-title">
     <span class="smaller"><a href="/"><i class="fa fa-arrow-left"></i>&nbsp; Back to Index</a></span>
   </header>
@@ -50,40 +51,42 @@
       <a href="#" class="btn btn-danger" role="button" onclick="del()"><i class="fa fa-trash-o fa-fw"></i>&nbsp; Delete</a>
     </p>
   </section>
-<script>
-  function edit() {
-    $('.view').hide()
-    $('.edit').show()
-  }
+{{#contentFor 'pageScripts'}}
+  <script>
+    function edit() {
+      $('.view').hide()
+      $('.edit').show()
+    }
 
-  function cancel() {
-    $('.view').show()
-    $('.edit').hide()
-  }
+    function cancel() {
+      $('.view').show()
+      $('.edit').hide()
+    }
 
-  function save() {
-    $.ajax('/contacts/{{contact._id}}', {
-      method: 'PUT',
-      data: {
-        first: $('#first').val(),
-        last: $('#last').val(),
-        email: $('#email').val(),
-        mobile: $('#mobile').val(),
-        address: $('#address').val()
-      },
-      complete: function() {
-        cancel()
-        location.reload()
-      }
-    })
-  }
+    function save() {
+      $.ajax('/contacts/{{contact._id}}', {
+        method: 'PUT',
+        data: {
+          first: $('#first').val(),
+          last: $('#last').val(),
+          email: $('#email').val(),
+          mobile: $('#mobile').val(),
+          address: $('#address').val()
+        },
+        complete: function() {
+          cancel()
+          location.reload()
+        }
+      })
+    }
 
-  function del() {
-    $.ajax('/contacts/{{contact._id}}', {
-      method: 'DELETE',
-      complete: function() {
-        location = '/'
-      }
-    })
-  }
-</script>
+    function del() {
+      $.ajax('/contacts/{{contact._id}}', {
+        method: 'DELETE',
+        complete: function() {
+          location = '/'
+        }
+      })
+    }
+  </script>
+{{/contentFor}}

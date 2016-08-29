@@ -1,43 +1,52 @@
+{{!< layout}}
+  <header class="page-header">
+    <h2 class="page-title">
+      <span class="bigger text-center"> Web-based Contacts App </span><br>
+    </h2>
+  </header>
 
-    <style>
-      #searchField .error {
-        background-color: #FC0;
-      }
-
-      div.suggestions {
-        background-color: rgba(255,255,255,0.8);
-        padding: 2px 6px;
-        border: 2px solid rgba(255,219,58,0.6);
-      }
-    </style>
-    <header class="page-header">
-      <h2 class="page-title">
-        <span class="bigger text-center"> Web-based Contacts App </span><br>
-      </h2>
+  <section class="block">
+    <header class="block__header">
+      <h3 class="block__title"><i class="fa fa-users"></i>&nbsp; Contacts Index</h3>
+      <div class="input-group">
+        <input id="searchField" spellcheck="false" type="text" autocomplete="off" placeholder="Search for a Contact" name="search">
+      </div>
     </header>
-
-    <section class="block">
-      <header class="block__header">
-        <h3 class="block__title"><i class="fa fa-users"></i>&nbsp; Contacts Index</h3>
-        <div class="input-group">
-          <input class="typeahead tt-query" spellcheck="false" type="text" class="typeahead" autocomplete="off" placeholder="Search for Contact" name="typeahead"><br />
+    <div class="srs">
+      {{#each contacts as |contact|}}
+        <div class="list-group">
+          <a id="contact" href="/contacts/{{contact._id}}" class="list-group-item">
+            <h4 class="list-group-item-heading"><i class="fa fa-user"></i>&nbsp; {{contact.name.full}}</h4>
+            <p class="list-group-item-text">{{contact.mobile}}</p>
+          </a>
         </div>
-      </header>
-        {{#each contacts as |contact|}}
-          <div class="list-group">
-            <a id="contact" href="/contacts/{{contact._id}}" class="list-group-item">
-              <h4 class="list-group-item-heading"><i class="fa fa-user"></i>&nbsp; {{contact.name.full}}</h4>
-              <p class="list-group-item-text">{{contact.mobile}}</p>
-            </a>
-          </div>
-          {{/each}}
-    </section>
-    <script src="/js/jquery-1.12.0.min.js"></script>
-    <script src="js/typeahead.bundle.js"></script>
-    <script>
-    $('input.typeahead').typeahead({
-      name: 'typeahead',
-      remote: 'http://localhost:3000/search?name=%QUERY',
-      limit: 20
-    })
-    </script>
+      {{/each}}
+    </div>
+  </section>
+{{#contentFor 'pageScripts'}}
+  <script>
+    $('#searchField').keyup(function(e) {
+      var _tag = $('#searchField').val();
+      if (_tag != '') {
+        $.ajax({
+          dataType: 'json',
+          url: '/search?name=' + _tag,
+          method: 'GET',
+          complete: function(data) {
+            console.log(data.responseJSON);
+
+            if (data) {
+              var items = data.responseJSON
+              $('.srs').empty();
+              //$('.list-group').append(" Results for <b>" + _tag + "</b>");
+
+              $.each(items, function(i, item) {
+                 $('.srs').append("<div class='list-group'><a id='contact' class='list-group-item' href='/contacts/" + encodeURIComponent(item) + "'><h4 class='list-group-item-heading'><i class='fa fa-user'></i>&nbsp;" + item + "</h4><p class='list-group-item-text'>" + item + "</p></a></div>");
+              })
+            }
+          }
+        })
+      }
+    }) 
+  </script>
+{{/contentFor}}

@@ -9,7 +9,7 @@
 </header>
 
 <section class="block">
-
+  <div id="success"></div>
 	<header class="block__header">Basic Information</header>
 
 	<dl>
@@ -33,26 +33,29 @@
     </dd>
   </dl>
 </section>
-<script src="/js/jquery-1.12.0.min.js"></script>
+{{#contentFor 'pageScripts'}}
 <script>
-	function create() {
-    $.ajax('/', {
+  function create() {
+    var first = $('#first').val();
+    var last = $('#last').val();
+    var email = $('#email').val();
+    var mobile = $('#mobile').val();
+    var address = $('#address').val();
+
+    $.ajax({
+      url: '/',
       method: 'POST',
       data: {
-        first: $('#first').val(),
-        last: $('#last').val(),
-        email: $('#email').val(),
-        mobile: $('#mobile').val(),
-        address: $('#address').val()
+        first: first,
+        last: last,
+        email: email,
+        mobile: mobile,
+        address: address
       },
       complete: function() {
-        location = '/'
+        location = '/';
       }
     })
   }
-
-  function cancel() {
-    $('.view').show()
-    $('.edit').hide()
-  }
 </script>
+{{/contentFor}}
