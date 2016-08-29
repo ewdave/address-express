@@ -33,13 +33,10 @@
           url: '/search?name=' + _tag,
           method: 'GET',
           complete: function(data) {
-            console.log(data.responseJSON);
 
             if (data) {
               var items = data.responseJSON
               $('.srs').empty();
-              //$('.list-group').append(" Results for <b>" + _tag + "</b>");
-
               $.each(items, function(i, item) {
                  $('.srs').append("<div class='list-group'><a id='contact' class='list-group-item' href='/contacts/" + encodeURIComponent(item) + "'><h4 class='list-group-item-heading'><i class='fa fa-user'></i>&nbsp;" + item + "</h4><p class='list-group-item-text'>" + item + "</p></a></div>");
               })
